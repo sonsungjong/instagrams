@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instagrams/constants/common_size.dart';
+import 'package:instagrams/widget/profile_body.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -13,28 +14,18 @@ class ProfileScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _appbar(),
-            _username(),
+            ProfileBody(),
           ],
         ),
       ),
     );
   }
 
-  Widget _username(){
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: common_gap),
-      child: Text('this is user name',
-        style: TextStyle(fontWeight: FontWeight.bold),),
-    );
-  }
-
   Row _appbar() {
-    return Row(
-            children: [
-              SizedBox(width: 44,),
-              Expanded(child: Text('Son SungJong', textAlign: TextAlign.center,)),
-              IconButton(onPressed: (){}, icon: Icon(Icons.menu))
-            ],
-          );
+    return Row(children:
+    [SizedBox(width: 44,),
+      Expanded(child: Text('Son SungJong', textAlign: TextAlign.center,)),
+      IconButton(onPressed: (){}, icon: Icon(Icons.menu))],
+    );
   }
 }
