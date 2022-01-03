@@ -86,34 +86,37 @@ class _ProfileBodyState extends State<ProfileBody> {
 
   Row _tapButtons() {
     return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    IconButton(
-                        onPressed: (){
-                          setState(() {
-                            _selectedTab = SelectedTab.left;
-                            _leftImagesPageMargin = 0;
-                            _rightImagesPageMargin = size.width;
-                          });
-                        },
-                        icon: ImageIcon(
-                          AssetImage('assets/images/grid.png'),
-                          color: _selectedTab==SelectedTab.left?Colors.black:Colors.black26,)
-                    ),
-                    IconButton(
-                        onPressed: (){
-                          setState(() {
-                            _selectedTab = SelectedTab.right;
-                            _leftImagesPageMargin = -size.width;
-                            _rightImagesPageMargin = 0;
-                          });
-                        },
-                        icon: ImageIcon(
-                          AssetImage('assets/images/saved.png'),
-                          color: _selectedTab==SelectedTab.right?Colors.black:Colors.black26,)
-                    ),
-                  ],
-                );
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          IconButton(
+              onPressed: (){_tabSelected(SelectedTab.left);},
+              icon: ImageIcon(
+                AssetImage('assets/images/grid.png'),
+                color: _selectedTab==SelectedTab.left?Colors.black:Colors.black26,)),
+          IconButton(
+              onPressed: (){_tabSelected(SelectedTab.right);},
+              icon: ImageIcon(
+                AssetImage('assets/images/saved.png'),
+                color: _selectedTab==SelectedTab.right?Colors.black:Colors.black26,)),
+        ],
+    );
+  }
+
+  _tabSelected(SelectedTab selectedTab){
+    setState(() {
+      switch(selectedTab){
+        case SelectedTab.left:
+          _selectedTab = SelectedTab.left;
+          _leftImagesPageMargin = 0;
+          _rightImagesPageMargin = size.width;
+          break;
+        case SelectedTab.right:
+          _selectedTab = SelectedTab.right;
+          _leftImagesPageMargin = -size.width;
+          _rightImagesPageMargin = 0;
+          break;
+      }
+    });
   }
 
   Padding _editProfileBtn() {
