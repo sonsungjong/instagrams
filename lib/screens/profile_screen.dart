@@ -13,7 +13,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final menuWidth = size.width/3*2;
+  final menuWidth = size.width/3*1;
 
   MenuStatus _menuStatus = MenuStatus.closed;
   double bodyXPos = 0;
