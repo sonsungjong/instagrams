@@ -2,10 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:instagrams/constants/common_size.dart';
 import 'package:instagrams/constants/screen_size.dart';
+import 'package:instagrams/screens/profile_screen.dart';
+import 'package:instagrams/widget/rounded_avatar.dart';
 
 class ProfileBody extends StatefulWidget {
 
-  ProfileBody({Key? key}) : super(key: key);
+  final Function onMenuChanged;
+  ProfileBody({Key? key, required this.onMenuChanged}) : super(key: key);
 
   @override
   State<ProfileBody> createState() => _ProfileBodyState();
@@ -18,36 +21,91 @@ class _ProfileBodyState extends State<ProfileBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: CustomScrollView(
-        slivers: [SliverList(
-            delegate: SliverChildListDelegate(
-                [ _username(),
-                  _userBio(),
-                  _editProfileBtn(),
-                  _tapButtons(),
-                  _selectedIndicator(),
-                ]
-            )
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _appbar(),
+          Expanded(
+            child: CustomScrollView(
+              slivers: [SliverList(
+                  delegate: SliverChildListDelegate(
+                      [
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(common_gap),
+                              child: RoundedAvatar(
+                                size: 80,
+                              ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(right:common_gap),
+                                child: Table(
+                                  children: [
+                                    TableRow(
+                                        children: [
+                                          _valueText('123456'),
+                                          _valueText('123456'),
+                                          _valueText('123456'),
+                                        ]
+                                    ),
+                                    TableRow(
+                                      children: [
+                                        _labelText('Post'),
+                                        _labelText('Followers'),
+                                        _labelText('Following')
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        _username(),
+                        _userBio(),
+                        _editProfileBtn(),
+                        _tapButtons(),
+                        _selectedIndicator(),
+                      ]
+                  )
+              ),
+                _imagesPager()
+              ],
+            ),
           ),
-          _imagesPager()
         ],
       ),
     );
   }
+
+  Row _appbar() {
+    return Row(children:
+    [SizedBox(width: 44,),
+      Expanded(child: Text('Son SungJong', textAlign: TextAlign.center,)),
+      IconButton(onPressed: (){
+        widget.onMenuChanged();
+      }, icon: Icon(Icons.menu))],
+    );
+  }
+
+  Text _valueText(String str) => Text(str, style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,);
+  Text _labelText(String str) => Text(str, style: TextStyle(fontWeight: FontWeight.w300, fontSize: 11), textAlign: TextAlign.center);
 
   SliverToBoxAdapter _imagesPager() {
     return SliverToBoxAdapter(
             child: Stack(
               children: [
                 AnimatedContainer(
-                  duration: Duration(milliseconds: 300),
+                  duration: duration,
                   transform: Matrix4.translationValues(_leftImagesPageMargin, 0, 0),
                   curve: Curves.fastOutSlowIn,
                   child: _images(),
                 ),
                 AnimatedContainer(
-                  duration: Duration(milliseconds: 300),
+                  duration: duration,
                   transform: Matrix4.translationValues(_rightImagesPageMargin, 0, 0),
                   curve: Curves.fastOutSlowIn,
                   child: _images(),
