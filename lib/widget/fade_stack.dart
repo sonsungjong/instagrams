@@ -38,7 +38,8 @@ class _FadeStackState extends State<FadeStack> with SingleTickerProviderStateMix
       child: IndexedStack(
         index: widget.selectedForm,
         children: [
-          SignUpForm(), SignInForm()
+          SignUpForm(),
+          SignInForm(),
         ],
       ),
     );

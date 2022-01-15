@@ -14,13 +14,11 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen>{
   int selectedForm = 0;
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // 키보드로 인한 화면반응형 제거
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Stack(
           children: [
