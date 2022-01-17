@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagrams/screens/camera_screen.dart';
 import 'package:instagrams/screens/feed_screen.dart';
 import 'package:instagrams/screens/profile_screen.dart';
 
@@ -14,21 +15,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<BottomNavigationBarItem> btmNavItems = [
-    BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
-    BottomNavigationBarItem(icon: Icon(Icons.search), label: ""),
-    BottomNavigationBarItem(icon: Icon(Icons.add), label: ""),
-    BottomNavigationBarItem(icon: Icon(Icons.healing), label: ""),
-    BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: ""),
+    BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),             // 0
+    BottomNavigationBarItem(icon: Icon(Icons.search), label: ""),           // 1
+    BottomNavigationBarItem(icon: Icon(Icons.add), label: ""),              // 2
+    BottomNavigationBarItem(icon: Icon(Icons.healing), label: ""),          // 3
+    BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: ""),   // 4
   ];
 
   int _selectedIndex = 0;
 
   static List<Widget> _screens = <Widget>[
-    FeedScreen(),
-    Container(color: Colors.blueAccent),
-    Container(color: Colors.greenAccent),
-    Container(color: Colors.deepPurpleAccent),
-    ProfileScreen(),
+    FeedScreen(),                                   // 0
+    Container(color: Colors.blueAccent),            // 1
+    Container(color: Colors.greenAccent),           // 2
+    Container(color: Colors.deepPurpleAccent),      // 3
+    ProfileScreen(),                                // 4
   ];
 
   @override
@@ -52,9 +53,20 @@ class _HomePageState extends State<HomePage> {
   }
   void _onBtmItemClick(int index){
     print(index);
-    setState((){
-      _selectedIndex = index;
-    });
+    switch(index){
+      case 2:
+        _openCamera();
+        break;
+      default:
+        setState((){
+          _selectedIndex = index;
+        });
+    }
+  }
+
+  void _openCamera() {
+    // 새창 띄우는 방법
+    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CameraScreen()));
   }
 }
 
