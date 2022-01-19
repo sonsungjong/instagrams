@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:instagrams/screens/camera_screen.dart';
 import 'package:instagrams/screens/feed_screen.dart';
 import 'package:instagrams/screens/profile_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'constants/screen_size.dart';
 
@@ -23,6 +24,7 @@ class _HomePageState extends State<HomePage> {
   ];
 
   int _selectedIndex = 0;
+  GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
   static List<Widget> _screens = <Widget>[
     FeedScreen(),                                   // 0
@@ -36,6 +38,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
     return Scaffold(
+      key: _key,
       body: IndexedStack(
         index : _selectedIndex,
         children: _screens,
@@ -64,9 +67,35 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _openCamera() {
-    // 새창 띄우는 방법
-    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CameraScreen()));
+  void _openCamera() async{
+    if(await checkIfPermissionGranted(context)) {
+      // 새창 띄우는 방법
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => CameraScreen()));
+    }else{
+      SnackBar snackBar = SnackBar(
+        content: Text("사진, 파일, 마이크 접근 허용시 카메라 사용 가능"),
+        action: SnackBarAction(
+          label: "OK",
+          onPressed: (){
+            _key.currentState!.hideCurrentSnackBar();
+          },
+        ),
+      );
+      _key.currentState!.showSnackBar(snackBar);
+    }
+  }
+
+  Future<bool> checkIfPermissionGranted(BuildContext context) async{
+    Map<Permission, PermissionStatus> statuses =
+        await [Permission.camera, Permission.microphone].request();
+    bool permitted = true;
+
+    statuses.forEach((permission, permissionStatus) {
+      if(!permissionStatus.isGranted) permitted = false;
+    });
+
+    return permitted;
   }
 }
 
