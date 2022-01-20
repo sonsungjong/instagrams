@@ -1,3 +1,4 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:instagrams/screens/camera_screen.dart';
 import 'package:instagrams/screens/feed_screen.dart';
@@ -54,6 +55,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
   void _onBtmItemClick(int index){
     print(index);
     switch(index){
@@ -74,11 +76,13 @@ class _HomePageState extends State<HomePage> {
           MaterialPageRoute(builder: (context) => CameraScreen()));
     }else{
       SnackBar snackBar = SnackBar(
-        content: Text("사진, 파일, 마이크 접근 허용시 카메라 사용 가능"),
+        content: Text("사진, 파일, 마이크 접근을 허용해주셔야 카메라 사용이 가능합니다."),
         action: SnackBarAction(
           label: "OK",
           onPressed: (){
             _key.currentState!.hideCurrentSnackBar();
+            // 셋팅페이지로 보내기
+            AppSettings.openAppSettings();
           },
         ),
       );

@@ -4,7 +4,7 @@ class MyProgressIndicator extends StatelessWidget {
 
   final double container_size;
   final double progress_size;
-  const MyProgressIndicator({Key? key, required this.container_size, this.progress_size = 60}) : super(key: key);
+  MyProgressIndicator({Key? key, this.container_size = 60, this.progress_size = 60}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
