@@ -25,6 +25,7 @@ class _CameraScreenState extends State<CameraScreen> {
   void dispose() {
     // TODO: implement dispose
     _pageController.dispose();
+    widget._cameraState.dispose();
     super.dispose();
   }
 
