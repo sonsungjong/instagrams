@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:instagrams/screens/camera_screen.dart';
 import 'package:instagrams/screens/feed_screen.dart';
 import 'package:instagrams/screens/profile_screen.dart';
+import 'package:instagrams/screens/search_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'constants/screen_size.dart';
@@ -29,7 +32,7 @@ class _HomePageState extends State<HomePage> {
 
   static List<Widget> _screens = <Widget>[
     FeedScreen(),                                   // 0
-    Container(color: Colors.blueAccent),            // 1
+    SearchScreen(),            // 1
     Container(color: Colors.greenAccent),           // 2
     Container(color: Colors.deepPurpleAccent),      // 3
     ProfileScreen(),                                // 4
@@ -92,7 +95,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<bool> checkIfPermissionGranted(BuildContext context) async{
     Map<Permission, PermissionStatus> statuses =
-        await [Permission.camera, Permission.microphone].request();
+        await [Permission.camera, Permission.microphone, Platform.isIOS? Permission.photos : Permission.storage].request();
     bool permitted = true;
 
     statuses.forEach((permission, permissionStatus) {
