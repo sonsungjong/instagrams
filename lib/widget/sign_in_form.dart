@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:instagrams/constants/common_size.dart';
 import 'package:instagrams/home_page.dart';
+import 'package:instagrams/models/firebase_auth_state.dart';
 import 'package:instagrams/widget/or_divider.dart';
+import 'package:provider/provider.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({Key? key}) : super(key: key);
@@ -80,7 +82,9 @@ class _SignInFormState extends State<SignInForm> {
               OrDivider(),
               // 페이스북 로그인
               FlatButton.icon(
-                onPressed: (){},
+                onPressed: (){
+                  Provider.of(context, listen: false).changeFirebaseAuthStatus(FirebaseAuthStatus.signin);
+                },
                 icon: ImageIcon(AssetImage('assets/images/facebook.png')),
                 textColor: Colors.blue,             // 배경을 제외하고 내용만 색깔주기
                 label: Text('Login with Facebook'),
